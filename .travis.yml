@@ -10,10 +10,14 @@ before_install:
     - docker info
     - docker pull clearlinux/clr-installer-ci
     - docker run --network=host --name clear-test -v $(pwd):/travis -v /dev:/dev  -v /var/tmp/test:/tmp -v /sys/fs/cgroup:/sys/fs/cgroup:ro -e container=docker --privileged --tmpfs /run --tmpfs /run/lock -dit --rm clearlinux/clr-installer-ci:latest /sbin/init
-    - docker ps
+    - docker exec -it clear-test bash -c "ls -la /var/lib/"
+    - docker exec -it clear-test bash -c "ls -la /var/lib/swupd/"
+    - docker exec -it clear-test bash -c "swupd clean"
+    # - docker exec -it clear-test bash -c "touch /var/lib/swupd/bla"
+    #- docker exec -it clear-test bash -c "ln /var/lib/swupd/bla /bla"
     #- docker exec -it clear-test bash -c "git clone https://github.com/otaviobp/swupd-client.git && cd swupd-client && ./autogen.sh && make -j && make install && swupd -v"
     #- docker exec -it clear-test bash -c "swupd verify --install -m latest -B os-clr-on-clr --debug"
-    - docker exec -it clear-test bash -c "swupd bundle-add devpkg-gtk3 -S /swupd_tmp/ --debug" # TODO: Remove this when the GUI dependencies are installed in the clr-installer-ci image
+    - docker exec -it clear-test bash -c "swupd bundle-add devpkg-gtk3 --debug" # TODO: Remove this when the GUI dependencies are installed in the clr-installer-ci image
 
 
 script:
