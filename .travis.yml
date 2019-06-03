@@ -13,7 +13,7 @@ before_install:
     - docker ps
     #- docker exec -it clear-test bash -c "git clone https://github.com/otaviobp/swupd-client.git && cd swupd-client && ./autogen.sh && make -j && make install && swupd -v"
     #- docker exec -it clear-test bash -c "swupd verify --install -m latest -B os-clr-on-clr --debug"
-    - docker exec -it clear-test bash -c "swupd bundle-add devpkg-gtk3 --debug" # TODO: Remove this when the GUI dependencies are installed in the clr-installer-ci image
+    - docker exec -it clear-test bash -c "swupd bundle-add devpkg-gtk3 -S /swupd_tmp/ --debug" # TODO: Remove this when the GUI dependencies are installed in the clr-installer-ci image
 
 
 script:
